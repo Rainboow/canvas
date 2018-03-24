@@ -19,40 +19,20 @@
       context.fillRect(0,0,canvas.width,canvas.height);
 
       for(var i = 0;i<200;i++){
-          var x = Math.random()*canvas.width;
-          var y = Math.random()*canvas.height;
           var R = Math.random()*10+10;
+          var x = Math.abs(Math.random()*canvas.width-2*R)+R;
+          var y = Math.abs(Math.random()*canvas.height-2*R)+R;
           var angle = Math.random()*360;
-           drawStar(context, x, y, R, R/2, angle);
+          var color = "rgb("+Math.floor(Math.random()*256)+","
+                              +Math.floor(Math.random()*256)+","
+                              +Math.floor(Math.random()*256)+")";
+           drawStar(context, x, y, R, R/2, angle,color);
       }
-    /*  context.rect(100,100,100,100)
-      context.stroke()
-      context.fill()*/
-    /*context.lineWidth = 30
-    context.strokeStyle = "red"
-    context.lineCap = "butt"
-    context.lineTo(100,100)
-    context.lineTo(200,100)
-    context.stroke()
-
-    context.beginPath()
-    context.strokeStyle = "blue"
-    context.lineCap = "round"
-    context.lineTo(100,150)
-    context.lineTo(200,150)
-    context.stroke()
-
-    context.beginPath()
-    context.strokeStyle = "yellow"
-    context.lineCap = "square"
-    context.lineTo(100,200)
-    context.lineTo(200,200)
-    context.stroke()*/
   }
   //画星星
-    function drawStar(context, x, y, R, r, angle) {
+    function drawStar(context, x, y, R, r, angle,color) {
         context.lineWidth = 4;
-        context.fillStyle = "#ccc000";
+        context.fillStyle = color;
         context.beginPath();
         for (var i = 0; i < 5; i++) {
             context.lineTo(Math.cos((18 + i * 72 + angle) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72 + angle) / 180 * Math.PI) * R + y)
