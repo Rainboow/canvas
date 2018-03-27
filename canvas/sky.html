@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>星空配月亮</title>
+</head>
+<body>
+<canvas id="canvas" style="display: block;margin: 0 auto;border: 1px solid #ccc"></canvas>
+<script>
+    window.onload = function () {
+        var canvas = document.getElementById("canvas");
+        canvas.width = 1000;
+        canvas.height = 800;
+        var context = canvas.getContext("2d");
+
+        var grd = context.createLinearGradient(0, 0, 0, 800);
+        grd.addColorStop(0.55, "#0e3457")
+        grd.addColorStop(1, "#13191e")
+        context.fillStyle = grd;
+        context.fillRect(0, 0, 1000, 800);
+
+        //星星
+        for (var i = 0; i < 200; i++) {
+            var x = Math.abs(Math.random() * canvas.width - 2 * R) + R;
+            var y = Math.abs(Math.random() * 0.7 * canvas.height - 2 * R) + R
+            var R = Math.floor(Math.random() * 5) + 5;
+            var r = R / 2;
+            var rot = Math.random() * 360;
+            drawStar(context, x, y, R, r, rot);
+        }
+
+        //月亮
+        context.beginPath();
+        context.save();
+        context.fillStyle = "yellow"
+        context.transform(0.3, 0, -0.02, 0.3, 680, 0)
+        context.arc(400, 400, 300, 0.5 * Math.PI, 1.5 * Math.PI, true);
+        context.moveTo(400, 100);
+        context.arcTo(1200, 400, 400, 700, (400 - 100) * dis(400, 100, 1200, 400) / (1200 - 400));
+        context.fill();
+        context.restore();
+        context.closePath()
+
+    }
+
+    function dis(x1, y1, x2, y2) {
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
+
+    function drawStar(cxt, x, y, R, r, rot) {
+        cxt.fillStyle = "yellow";
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72 + rot) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72 + rot) / 180 * Math.PI) * R + y);
+            cxt.lineTo(Math.cos((54 + i * 72 + rot) / 180 * Math.PI) * r + x, -Math.sin((54 + i * 72 + rot) / 180 * Math.PI) * r + y);
+        }
+        cxt.closePath();
+        cxt.fill();
+    }
+
+</script>
+</body>
+</html>
