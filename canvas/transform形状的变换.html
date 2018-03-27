@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<canvas id="canvas" style="display: block; border: 1px solid #ccc; margin: 10px auto"></canvas>
+<script>
+    window.onload = function () {
+        var canvas = document.getElementById("canvas");
+        canvas.width = 800;
+        canvas.height = 800;
+        var context = canvas.getContext('2d');
+
+        context.fillStyle = "red";
+        //xy分别移动100px
+        //图像状态保存
+        context.save();
+        context.translate(100, 100);
+        context.rotate(10 / 180 * Math.PI);
+        //会将xy坐标、边框、矩形本身同时缩放
+        context.scale(1.5, 1.5)
+        context.fillRect(0, 0, 400, 400);
+        context.fill();
+        context.restore();
+
+        context.save();
+        context.fillStyle = "blue";
+        context.fillRect(100, 100, 400, 400);
+        context.fill();
+        context.restore();
+
+        context.fillStyle = "yellow";
+        //a d水平、垂直缩放
+        //c d水平、垂直旋转
+        //e f水平、垂直位移
+        context.transform(2, 0.2, 0.2, 2, 0, 0);
+        //在原来的基础上叠加
+        context.transform(1, -0.2, -0.2, 1, 0, 0);
+        //重新设置transform的值
+        context.setTransform(2, 0, 0, 2, 100, 100);
+        context.fillRect(200, 200, 100, 100);
+        context.fill();
+        // context.setTransform()
+
+    }
+</script>
+</body>
+</html>
