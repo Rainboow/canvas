@@ -17,11 +17,10 @@
         var context = canvas.getContext("2d");
 
         var grd = context.createLinearGradient(0, 0, 0, 800);
-        grd.addColorStop(0.55, "#0e3457")
-        grd.addColorStop(1, "#13191e")
+        grd.addColorStop(0.1, "#13191e")
+        grd.addColorStop(0.75, "#0e3457")
         context.fillStyle = grd;
         context.fillRect(0, 0, 1000, 800);
-
         //星星
         for (var i = 0; i < 200; i++) {
             var x = Math.abs(Math.random() * canvas.width - 2 * R) + R;
@@ -31,19 +30,32 @@
             var rot = Math.random() * 360;
             drawStar(context, x, y, R, r, rot);
         }
-
         //月亮
-        context.beginPath();
         context.save();
+        context.beginPath();
         context.fillStyle = "yellow"
         context.transform(0.3, 0, -0.02, 0.3, 680, 0)
         context.arc(400, 400, 300, 0.5 * Math.PI, 1.5 * Math.PI, true);
         context.moveTo(400, 100);
         context.arcTo(1200, 400, 400, 700, (400 - 100) * dis(400, 100, 1200, 400) / (1200 - 400));
         context.fill();
+        context.closePath();
         context.restore();
-        context.closePath()
 
+        //绘制绿地
+        context.save();
+        context.beginPath();
+        context.moveTo(0, 600);
+        context.bezierCurveTo(500, 500, 500, 800, 1000, 550);
+        context.lineTo(1000, 800);
+        context.lineTo(0, 800);
+        var grad = context.createLinearGradient(0, 800, 0, 0);
+        grad.addColorStop(0, "#030");
+        grad.addColorStop(1, "#080");
+        context.fillStyle = grad;
+        context.fill();
+        context.closePath();
+        context.restore();
     }
 
     function dis(x1, y1, x2, y2) {
