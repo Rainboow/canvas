@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<canvas id="canvas" style="display: block; border: 1px solid #ccc; margin: 10px auto"></canvas>
+<script>
+    window.onload = function () {
+        var canvas = document.getElementById("canvas");
+        canvas.width = 800;
+        canvas.height = 800;
+        var context = canvas.getContext('2d');
+
+        //背景为一张图片时
+        /*  var imgBackground = new Image();
+          imgBackground.src = "images/timg.jpg";
+          imgBackground.onload = function () {
+              var pattern = context.createPattern(imgBackground, "repeat");
+              context.fillStyle = pattern;
+              context.fillRect(0, 0, 1200, 1200);
+          }*/
+        //背景为一个自己绘制的canvas画布时
+        var createCanvas = createCanavs();
+        var pattern = context.createPattern(createCanvas, "repeat");
+        context.fillStyle = pattern;
+        context.fillRect(0, 0, 800, 800);
+
+    }
+
+    function createCanavs() {
+        var createCanvas = document.createElement('canvas');
+        createCanvas.width = 100;
+        createCanvas.height = 100;
+        var createContext = createCanvas.getContext('2d');
+        drawStar(createContext, 50, 50, 50);
+        return createCanvas;
+    }
+
+    function drawStar(cxt, x, y, R) {
+        cxt.fillStyle = "yellow";
+        cxt.beginPath();
+        for (var i = 0; i < 5; i++) {
+            cxt.lineTo(Math.cos((18 + i * 72) / 180 * Math.PI) * R + x, -Math.sin((18 + i * 72) / 180 * Math.PI) * R + y);
+            cxt.lineTo(Math.cos((54 + i * 72) / 180 * Math.PI) * R / 2 + x, -Math.sin((54 + i * 72) / 180 * Math.PI) * R / 2 + y);
+        }
+        cxt.closePath();
+        cxt.fill();
+    }
+</script>
+</body>
+</html>
