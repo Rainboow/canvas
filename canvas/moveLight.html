@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>探照灯</title>
+</head>
+<body>
+<canvas id="canvas" style="display: block;border: 1px solid #ccc;margin: 0 auto;"></canvas>
+<script>
+    //圆的坐标半径等属性
+    var arcCon = {x: 100, y: 100, r: 200, vx: Math.random() * 5 + 10, vy: Math.random() * 5 + 10};
+    var width = 800;
+    var height = 800;
+    window.onload = function () {
+        var canvas = document.getElementById('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext('2d');
+        //定时器
+        setInterval(
+            function () {
+                draw(context);
+                update();
+            }, 100);
+
+    }
+
+    function update() {
+        //xy的运动
+        arcCon.x += arcCon.vx;
+        arcCon.y += arcCon.vy;
+        //左
+        if (arcCon.x - arcCon.r <= 0) {
+            arcCon.x = arcCon.r;
+            arcCon.vx = -arcCon.vx
+
+        }
+        //右
+        if (arcCon.x + arcCon.r >= width) {
+            arcCon.vx = -arcCon.vx;
+            arcCon.x = width - arcCon.r;
+        }
+        //上
+        if (arcCon.y - arcCon.r <= 0) {
+            arcCon.vy = -arcCon.vy;
+            arcCon.y = arcCon.r;
+        }
+        //下
+        if (arcCon.y + arcCon.r >= width) {
+            arcCon.vy = -arcCon.vy;
+            arcCon.y = width - arcCon.r;
+        }
+    }
+
+    function draw(context) {
+        //清空画布
+        context.clearRect(0, 0, width, height);
+
+        context.save();
+        context.beginPath();
+        context.fillStyle = "#000";
+        context.fillRect(0, 0, width, height);
+
+        context.beginPath();
+        context.fillStyle = "#fff";
+        context.arc(arcCon.x, arcCon.y, arcCon.r, 0, 2 * Math.PI);
+        context.fill();
+        //裁剪画布
+        context.clip();
+
+        context.fillStyle = "red";
+        context.font = "100px sans-serif"
+        context.textAlign = "center";
+        context.fillText("CANVAS绘图", 400, 140);
+        context.fillText("CANVAS绘图", 400, 280);
+        context.fillText("CANVAS绘图", 400, 400);
+        context.fillText("CANVAS绘图", 400, 520);
+        context.fillText("CANVAS绘图", 400, 660);
+        context.restore();
+    }
+</script>
+</body>
+</html>
